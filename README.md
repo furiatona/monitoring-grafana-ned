@@ -24,7 +24,7 @@ cd monitoring-grafana-ned/
 
 ### 2. Build the Binary
 
-Ensure you are in the `ned` directory and copy `env.sample` to `.env`:
+Copy `env.sample` to `.env`, then build the binary:
 
 ```bash
 cp env.sampe .env
@@ -45,5 +45,5 @@ This will generate an executable named `ned`.
 
 ---
 
-**License:** MIT  
+**License:** [MIT](./LICENSE)  
 **Author:** [furiatona](https://github.com/furiatona)
