@@ -69,7 +69,16 @@ if [[ -f "${OUTPUT_PATH}" ]]; then
 fi
 
 echo -e "${CYAN}🔧 Building ${APP_NAME} for ${GOOS}/${GOARCH}...${NC}"
-env GOOS="${GOOS}" GOARCH="${GOARCH}" go build -o "${OUTPUT_PATH}" "${ROOT_DIR}"
+ldflags=""
+for var in $(compgen -v); do
+  if [[ "$var" == EMBED_* ]]; then
+    go_var_name="${var#EMBED_}"
+    pkg_path="${APP_NAME}/internal/conn.default${go_var_name}"
+    value="${!var}"
+    ldflags+="-X '${pkg_path}=${value}' "
+  fi
+done
+env GOOS="${GOOS}" GOARCH="${GOARCH}" go build -ldflags="${ldflags}" -o "${OUTPUT_PATH}" "${ROOT_DIR}"
 
 if [[ $? -ne 0 ]]; then
   echo -e "${RED}❌ Build failed.${NC}"

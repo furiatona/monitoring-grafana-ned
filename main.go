@@ -13,23 +13,28 @@ import (
 )
 
 func init() {
-	if err := godotenv.Load(); err != nil {
-		fmt.Println("No .env file found, proceeding without it.")
-	}
+	_ = godotenv.Load() // optional: load .env if present
 }
 
 func main() {
-	// Set Consul config from env if not already set
+	// Override with env vars only if they're non-empty
 	vars := map[*string]string{
-		&consul.ConsulAddress: "CONSUL_ADDRESS",
-		&consul.ConsulToken:   "CONSUL_TOKEN",
-		&consul.ConsulKVKey:   "CONSUL_KV_KEY",
+		&consul.ConsulAddress: "EMBED_CONSUL_ADDRESS",
+		&consul.ConsulToken:   "EMBED_CONSUL_TOKEN",
+		&consul.ConsulKVKey:   "EMBED_CONSUL_KV_KEY",
 	}
 	for ptr, env := range vars {
-		if *ptr == "" {
-			*ptr = os.Getenv(env)
+		if val := os.Getenv(env); val != "" {
+			*ptr = val
 		}
 	}
+
+	// DEBUG: Show loaded config (optional)
+	/*
+		fmt.Println("ConsulAddress:", consul.ConsulAddress)
+		fmt.Println("ConsulToken:", consul.ConsulToken)
+		fmt.Println("ConsulKVKey:", consul.ConsulKVKey)
+	*/
 
 	if consul.ConsulAddress == "" || consul.ConsulKVKey == "" {
 		fmt.Println("Error: CONSUL_ADDRESS and CONSUL_KV_KEY must be set.")

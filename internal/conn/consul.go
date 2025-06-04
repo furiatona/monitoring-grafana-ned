@@ -11,9 +11,16 @@ import (
 )
 
 var (
-	ConsulAddress = ""
-	ConsulToken   = ""
-	ConsulKVKey   = ""
+	ConsulAddress = defaultConsulAddress
+	ConsulToken   = defaultConsulToken
+	ConsulKVKey   = defaultConsulKVKey
+)
+
+// These will be overridden at build time
+var (
+	defaultConsulAddress string
+	defaultConsulToken   string
+	defaultConsulKVKey   string
 )
 
 func FetchDCPatterns() (map[string]dcpatterns.DCPattern, error) {
