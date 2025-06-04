@@ -2,6 +2,7 @@
 
 **NED** is a lightweight CLI tool designed to simplify the deployment, update, and management of Prometheus Node Exporter instances across your infrastructure.
 
+> ⚠️ **Caution:** Credentials are embedded in the binary for user convenience during manual exporter installation. This approach is used only when automation is not possible due to policy restrictions. The tool is intended for use in secure environments. Use at your own risk.
 ---
 
 ## Features
