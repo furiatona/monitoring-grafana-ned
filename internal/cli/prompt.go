@@ -23,7 +23,7 @@ func SelectDC(recommended string, uniqueDCs map[string]struct{}) string {
 			parts := strings.Split(dc, ":")
 			label := caser.String(parts[1])
 			if dc == recommended {
-				label = fmt.Sprintf("\033[0;32m%s (recommended)\033[0m", label)
+				label = fmt.Sprintf("\033[0;32m%s (recommended, matches hostname: %s)\033[0m", label, parts[0])
 				defaultChoice = i
 			}
 			fmt.Printf("  %d) %s\n", i, label)
